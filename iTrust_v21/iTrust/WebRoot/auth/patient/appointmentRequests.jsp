@@ -12,7 +12,8 @@
 <%@page import="edu.ncsu.csc.itrust.action.AddApptRequestAction"%>
 <%@page import="edu.ncsu.csc.itrust.beans.ApptRequestBean"%>
 <%@page import="java.util.List"%>
-<%@page import="edu.ncsu.csc.itrust.action.ApptScheduleResolution"%>
+<%@page import="edu.ncsu.csc.itrust.action.StandardSuggest"%>
+<%@page import="edu.ncsu.csc.itrust.action.CustomSuggest"%>
 
 <%@include file="/global.jsp"%>
 
@@ -67,10 +68,12 @@
 					msg = "ERROR: " + msg;
 					frmt = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 					if(request.getParameter("slots") != null){
-						prompt = ApptScheduleResolution.customSuggest(action, appt, hcpid, frmt, apptType, Integer.parseInt(request.getParameter("slots")));
+						CustomSuggest customSuggestions = new CustomSuggest();
+						prompt = customSuggestions.suggestion(action, appt, hcpid, frmt, apptType, Integer.parseInt(request.getParameter("slots")));
 					} 
 					else {
-						prompt = ApptScheduleResolution.standardSuggest(action, appt, hcpid, frmt, apptType);
+						StandardSuggest standardSuggestions = new StandardSuggest();
+						prompt = standardSuggestions.suggestion(action, appt, hcpid, frmt, apptType);
 
 					}
 				} else {
