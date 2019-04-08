@@ -14,6 +14,7 @@
 <%@page import="java.util.List"%>
 <%@page import="edu.ncsu.csc.itrust.action.StandardSuggest"%>
 <%@page import="edu.ncsu.csc.itrust.action.CustomSuggest"%>
+<%@page import="edu.ncsu.csc.itrust.beans.UWApptBean"%>
 
 <%@include file="/global.jsp"%>
 
@@ -40,7 +41,7 @@
 	String apptType = "";
 	String prompt = "";
 	if (request.getParameter("request") != null) {
-		ApptBean appt = new ApptBean();
+		UWApptBean appt = new UWApptBean();
 		appt.setPatient(loggedInMID);
 		hcpid = Long.parseLong(request.getParameter("lhcp"));
 		appt.setHcp(hcpid);
@@ -55,7 +56,6 @@
 		tod = request.getParameter("time3");
 		apptType = request.getParameter("apptType");
 		appt.setApptType(apptType);
-		String slots = request.getParameter("slots");
 		try {
 			if(date.length() == 10){
 				Date d = frmt.parse(date + " " + hourI + ":" + minuteI
@@ -68,8 +68,10 @@
 					msg = "ERROR: " + msg;
 					frmt = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 					if(request.getParameter("slots") != null){
+						String slots = request.getParameter("slots");
+						appt.setnumSuggestions(Integer.parseInt(slots));
 						CustomSuggest customSuggestions = new CustomSuggest();
-						prompt = customSuggestions.suggestion(action, appt, hcpid, frmt, apptType, Integer.parseInt(request.getParameter("slots")));
+						prompt = customSuggestions.suggestion(action, appt, hcpid, frmt, apptType);
 					} 
 					else {
 						StandardSuggest standardSuggestions = new StandardSuggest();

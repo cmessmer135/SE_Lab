@@ -5,12 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import edu.ncsu.csc.itrust.beans.ApptBean;
+import edu.ncsu.csc.itrust.beans.UWApptBean;
 import edu.ncsu.csc.itrust.exception.DBException;
 
 public class StandardSuggest implements IApptScheduleResolution {
 	public StandardSuggest() {}
 	
-	public String suggestion(AddApptRequestAction action, ApptBean appt, long hcpid, SimpleDateFormat frmt, String apptType) throws SQLException, DBException {
+	public String suggestion(AddApptRequestAction action, UWApptBean appt, long hcpid, SimpleDateFormat frmt, String apptType) throws SQLException, DBException {
 		String prompt = "";
 		String comment = appt.getComment();
 		String oldDate = frmt.format(appt.getDate());
@@ -42,12 +43,12 @@ public class StandardSuggest implements IApptScheduleResolution {
 				+"<input type='hidden' name='time2' value='"+oldDate.substring(14,16)+"'/>"
 				+"<input type='hidden' name='time3' value='"+oldDate.substring(17)+"'/>"
 				+"<input type='hidden' name='comment' value='"+comment+"'/>"
-				+"<br>Number of Slots<input type='text' name='slots'>"
+				+"<br><br>Want more options? Enter a number.<input type='text' name='slots'>"
 				+"<br><input type='submit' name='request' value='Submit' /><br>"
 				+"</form></div>";
 		return prompt+="<div style='clear:both;'><br/></div>";
 	}
-	public String suggestion(AddApptRequestAction action, ApptBean appt, long hcpid, SimpleDateFormat frmt, String apptType, int numAppt) {
-		return "";
-	}
+	//public String suggestion(AddApptRequestAction action, UWApptBean appt, long hcpid, SimpleDateFormat frmt, String apptType) {
+	//	return "";
+	//}
 }
