@@ -48,7 +48,4 @@ public class StandardSuggest implements IApptScheduleResolution {
 				+"</form></div>";
 		return prompt+="<div style='clear:both;'><br/></div>";
 	}
-	//public String suggestion(AddApptRequestAction action, UWApptBean appt, long hcpid, SimpleDateFormat frmt, String apptType) {
-	//	return "";
-	//}
 }
