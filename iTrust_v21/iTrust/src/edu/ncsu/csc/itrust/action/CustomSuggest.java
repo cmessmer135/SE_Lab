@@ -22,22 +22,21 @@ public class CustomSuggest implements IApptScheduleResolution {
 		for(ApptBean possible : open) {
 			index++;
 			String newDate = frmt.format(possible.getDate());
-			prompt += "<div style='padding:5px;margin:5px;float:left;border:1px solid black;'><b>Option " + index+ "</b><br/>"+ frmt.format(possible.getDate()); 
-			prompt+="<form action='appointmentRequests.jsp' method='post'>"
-				+"<input type='hidden' name='lhcp' value='"+hcpid+"'/>"
-				+"<input type='hidden' name='apptType' value='"+apptType+"'/>	"
-				+"<input type='hidden' name='startDate' value='"+newDate.substring(0,10)+"'/>"
-				+"<input type='hidden' name='time1' value='"+newDate.substring(11,13)+"'/>"
-				+"<input type='hidden' name='time2' value='"+newDate.substring(14,16)+"'/>"
-				+"<input type='hidden' name='time3' value='"+newDate.substring(17)+"'/>"
-				+"<input type='hidden' name='comment' value='"+comment+"'/>"
-				+"<input type='submit' name='request' value='Select this time'/>"
-			+"</form></div>";
-			
+			prompt +="<div style='padding:5px;margin:5px;float:left;border:1px solid black;'><b>Option " + index+ "</b><br/>"+ frmt.format(possible.getDate()); 
+			prompt +="<form action='appointmentRequests.jsp' method='post'>"
+					+"<input type='hidden' name='lhcp' value='"+hcpid+"'/>"
+					+"<input type='hidden' name='apptType' value='"+apptType+"'/>	"
+					+"<input type='hidden' name='startDate' value='"+newDate.substring(0,10)+"'/>"
+					+"<input type='hidden' name='time1' value='"+newDate.substring(11,13)+"'/>"
+					+"<input type='hidden' name='time2' value='"+newDate.substring(14,16)+"'/>"
+					+"<input type='hidden' name='time3' value='"+newDate.substring(17)+"'/>"
+					+"<input type='hidden' name='comment' value='"+comment+"'/>"
+					+"<input type='submit' name='request' value='Select this time'/>"
+					+"</form></div>";
 		}
 		
 
-		prompt += "<form action='appointmentRequests.jsp'>"
+		prompt +="<form action='appointmentRequests.jsp' method='post'>"
 				+"<input type='hidden' name='lhcp' value='"+hcpid+"'/>"
 				+"<input type='hidden' name='apptType' value='"+apptType+"'/>	"
 				+"<input type='hidden' name='startDate' value='"+oldDate.substring(0,10)+"'/>"
@@ -45,9 +44,14 @@ public class CustomSuggest implements IApptScheduleResolution {
 				+"<input type='hidden' name='time2' value='"+oldDate.substring(14,16)+"'/>"
 				+"<input type='hidden' name='time3' value='"+oldDate.substring(17)+"'/>"
 				+"<input type='hidden' name='comment' value='"+comment+"'/>"
-				+"<br><br>Want more options? Enter a number.<input type='text' name='slots'><br><input type='submit' name='request' value='Submit' /><br>"
-				+"</form></div>";
-		return prompt+="<div style='clear:both;'><br/></div>";
+				+"<div style='clear:both;'><br/></div>";
+		
+		prompt +="<div>Want more options?"
+				+"<br>Enter how many: <input type='number' name='slots' min='1' max='100' style='width: 60px'>"
+				+"<br><input type='submit' name='request' value='Submit' />"
+				+"</div><br>";
+		
+		return prompt;
 	}
 	
 	//public String suggestion(AddApptRequestAction action, ApptBean appt, long hcpid, SimpleDateFormat frmt, String apptType) {

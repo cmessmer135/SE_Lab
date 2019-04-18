@@ -14,6 +14,7 @@
 <%@page import="java.util.List"%>
 <%@page import="edu.ncsu.csc.itrust.action.StandardSuggest"%>
 <%@page import="edu.ncsu.csc.itrust.action.CustomSuggest"%>
+<%@page import="edu.ncsu.csc.itrust.action.IApptScheduleResolution"%>
 <%@page import="edu.ncsu.csc.itrust.beans.UWApptBean"%>
 
 <%@include file="/global.jsp"%>
@@ -67,16 +68,14 @@
 				if (msg.contains("conflicts")) {
 					msg = "ERROR: " + msg;
 					frmt = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
-					if(request.getParameter("slots") != null){
+					if(request.getParameter("slots") != null) {
 						String slots = request.getParameter("slots");
 						appt.setnumSuggestions(Integer.parseInt(slots));
-						CustomSuggest customSuggestions = new CustomSuggest();
+						IApptScheduleResolution customSuggestions = new CustomSuggest();
 						prompt = customSuggestions.suggestion(action, appt, hcpid, frmt, apptType);
-					} 
-					else {
-						StandardSuggest standardSuggestions = new StandardSuggest();
+					} else {
+						IApptScheduleResolution standardSuggestions = new StandardSuggest();
 						prompt = standardSuggestions.suggestion(action, appt, hcpid, frmt, apptType);
-
 					}
 				} else {
 					loggingAction.logEvent(
